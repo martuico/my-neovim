@@ -106,6 +106,7 @@ _G.packer_plugins = {
     url = "https://github.com/kdheepak/lazygit.nvim"
   },
   ["lsp-zero.nvim"] = {
+    config = { "\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17martuico.lsp\frequire\0" },
     loaded = true,
     path = "/Users/marcarlotuico/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
     url = "https://github.com/VonHeikemen/lsp-zero.nvim"
@@ -209,14 +210,18 @@ time([[Defining packer_plugins]], false)
 time([[Config for lazygit.nvim]], true)
 try_loadstring("\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\flazygit\19load_extension\14telescope\frequire\0", "config", "lazygit.nvim")
 time([[Config for lazygit.nvim]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\2\n#\0\1\4\1\1\0\0039\1\0\0-\3\0\0D\1\2\0\0À\18root_has_file\20\1\1\2\0\1\0\0033\1\0\0002\0\0€L\1\2\0\0E\0\1\5\3\0\0\14-\1\0\0-\3\1\0B\1\2\2\18\3\0\0B\1\2\2-\2\0\0-\4\2\0B\2\2\2\18\4\0\0B\2\2\2\r\3\1\0X\3\1€\19\3\2\0L\3\2\0\1À\2À\3Àæ\1\0\2\5\0\6\0\r9\2\0\0009\2\1\2\15\0\2\0X\3\b€6\2\2\0009\2\3\2'\4\4\0B\2\2\0016\2\2\0009\2\3\2'\4\5\0B\2\2\1K\0\1\0Fcommand! -buffer FormattingSync lua vim.lsp.buf.formatting_sync()=command! -buffer Formatting lua vim.lsp.buf.formatting()\bcmd\bvim\24document_formatting\24server_capabilitiesò\5\1\0\15\0\"\1X6\0\0\0'\2\1\0B\0\2\0023\1\2\0005\2\3\0005\3\4\0005\4\5\0005\5\6\0005\6\n\0005\a\b\0003\b\a\0=\b\t\a=\a\v\0065\a\f\0\18\b\1\0\18\n\2\0B\b\2\2=\b\t\a=\a\r\0065\a\14\0\18\b\1\0\18\n\3\0B\b\2\2=\b\t\a=\a\15\0065\a\16\0\18\b\1\0\18\n\4\0B\b\2\2=\b\t\a=\a\17\0065\a\18\0\18\b\1\0\18\n\5\0B\b\2\2=\b\t\a=\a\19\0063\a\20\0009\b\21\0005\n\31\0004\v\a\0009\f\22\0009\f\23\f9\f\24\f9\f\25\f9\14\r\6B\f\2\2>\f\1\v9\f\22\0009\f\26\f9\f\24\f9\f\25\f9\14\v\6B\f\2\2>\f\2\v9\f\22\0009\f\26\f9\f\27\f9\f\25\f9\14\15\6B\f\2\2>\f\3\v9\f\22\0009\f\26\f9\f\28\f9\f\25\f9\14\17\6B\f\2\2>\f\4\v9\f\22\0009\f\26\f9\f\29\f9\f\25\f9\14\19\6B\f\2\2>\f\5\v9\f\22\0009\f\30\f9\f\24\f9\f\25\f9\14\r\6B\f\2\0?\f\0\0=\v \n=\a!\nB\b\2\0012\0\0€K\0\1\0\14on_attach\fsources\1\0\0\17code_actions\15elm_format\vstylua\rprettier\15formatting\twith\reslint_d\16diagnostics\rbuiltins\nsetup\0\26elm_format_formatting\1\0\0\22stylua_formatting\1\0\0\24prettier_formatting\1\0\0\23eslint_diagnostics\1\0\0\22eslint_formatting\1\0\0\14condition\1\0\0\0\1\2\0\0\relm.json\1\3\0\0\16stylua.toml\17.stylua.toml\1\4\0\0\16.prettierrc\19.prettierrc.js\21.prettierrc.json\1\4\0\0\14.eslintrc\17.eslintrc.js\19.eslintrc.json\0\fnull-ls\frequire\r€€À™\4\0", "config", "null-ls.nvim")
-time([[Config for null-ls.nvim]], false)
 -- Config for: rose-pine
 time([[Config for rose-pine]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme rose-pine\bcmd\bvim\0", "config", "rose-pine")
 time([[Config for rose-pine]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\2\n#\0\1\4\1\1\0\0039\1\0\0-\3\0\0D\1\2\0\0À\18root_has_file\20\1\1\2\0\1\0\0033\1\0\0002\0\0€L\1\2\0\0E\0\1\5\3\0\0\14-\1\0\0-\3\1\0B\1\2\2\18\3\0\0B\1\2\2-\2\0\0-\4\2\0B\2\2\2\18\4\0\0B\2\2\2\r\3\1\0X\3\1€\19\3\2\0L\3\2\0\1À\2À\3Àæ\1\0\2\5\0\6\0\r9\2\0\0009\2\1\2\15\0\2\0X\3\b€6\2\2\0009\2\3\2'\4\4\0B\2\2\0016\2\2\0009\2\3\2'\4\5\0B\2\2\1K\0\1\0Fcommand! -buffer FormattingSync lua vim.lsp.buf.formatting_sync()=command! -buffer Formatting lua vim.lsp.buf.formatting()\bcmd\bvim\24document_formatting\24server_capabilitiesò\5\1\0\15\0\"\1X6\0\0\0'\2\1\0B\0\2\0023\1\2\0005\2\3\0005\3\4\0005\4\5\0005\5\6\0005\6\n\0005\a\b\0003\b\a\0=\b\t\a=\a\v\0065\a\f\0\18\b\1\0\18\n\2\0B\b\2\2=\b\t\a=\a\r\0065\a\14\0\18\b\1\0\18\n\3\0B\b\2\2=\b\t\a=\a\15\0065\a\16\0\18\b\1\0\18\n\4\0B\b\2\2=\b\t\a=\a\17\0065\a\18\0\18\b\1\0\18\n\5\0B\b\2\2=\b\t\a=\a\19\0063\a\20\0009\b\21\0005\n\31\0004\v\a\0009\f\22\0009\f\23\f9\f\24\f9\f\25\f9\14\r\6B\f\2\2>\f\1\v9\f\22\0009\f\26\f9\f\24\f9\f\25\f9\14\v\6B\f\2\2>\f\2\v9\f\22\0009\f\26\f9\f\27\f9\f\25\f9\14\15\6B\f\2\2>\f\3\v9\f\22\0009\f\26\f9\f\28\f9\f\25\f9\14\17\6B\f\2\2>\f\4\v9\f\22\0009\f\26\f9\f\29\f9\f\25\f9\14\19\6B\f\2\2>\f\5\v9\f\22\0009\f\30\f9\f\24\f9\f\25\f9\14\r\6B\f\2\0?\f\0\0=\v \n=\a!\nB\b\2\0012\0\0€K\0\1\0\14on_attach\fsources\1\0\0\17code_actions\15elm_format\vstylua\rprettier\15formatting\twith\reslint_d\16diagnostics\rbuiltins\nsetup\0\26elm_format_formatting\1\0\0\22stylua_formatting\1\0\0\24prettier_formatting\1\0\0\23eslint_diagnostics\1\0\0\22eslint_formatting\1\0\0\14condition\1\0\0\0\1\2\0\0\relm.json\1\3\0\0\16stylua.toml\17.stylua.toml\1\4\0\0\16.prettierrc\19.prettierrc.js\21.prettierrc.json\1\4\0\0\14.eslintrc\17.eslintrc.js\19.eslintrc.json\0\fnull-ls\frequire\r€€À™\4\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
+-- Config for: lsp-zero.nvim
+time([[Config for lsp-zero.nvim]], true)
+try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17martuico.lsp\frequire\0", "config", "lsp-zero.nvim")
+time([[Config for lsp-zero.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

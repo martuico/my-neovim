@@ -61,9 +61,9 @@ return require('packer').startup(function(use)
       { 'jose-elias-alvarez/null-ls.nvim' },
       { 'jay-babu/mason-null-ls.nvim' },
     },
-    -- config = function()
-    --   require 'martuico.lsp'
-    -- end,
+     config = function()
+       require 'martuico.lsp'
+     end,
   }
 
   use {
