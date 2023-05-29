@@ -61,9 +61,9 @@ return require('packer').startup(function(use)
       { 'jose-elias-alvarez/null-ls.nvim' },
       { 'jay-babu/mason-null-ls.nvim' },
     },
-     config = function()
-       require 'martuico.lsp'
-     end,
+    config = function()
+      require 'martuico.lsp'
+    end,
   }
 
   use {
@@ -143,4 +143,7 @@ return require('packer').startup(function(use)
 
   use { "bluz71/vim-moonfly-colors", as = "moonfly" }
   use { "mg979/vim-visual-multi" }
+  use {
+    "aca/emmet-ls"
+  }
 end)

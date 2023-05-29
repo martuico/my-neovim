@@ -48,45 +48,26 @@ require('lspconfig').jsonls.setup {
   },
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require('lspconfig').emmet_ls.setup({
+    -- on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
+})
+
+
 lsp.setup()
 
--- Null-Ls for formatting
--- local null_ls = require 'null-ls'
--- null_ls.setup {
---   sources = {
---     -- Eslint
---     null_ls.builtins.code_actions.eslint_d,
---     null_ls.builtins.formatting.eslint_d.with {
---       condition = function(utils)
---         return utils.root_has_file { '.eslintrc.js', '.eslintrc.json' }
---       end,
---     },
---     null_ls.builtins.diagnostics.eslint_d.with {
---       condition = function(utils)
---         return utils.root_has_file { '.eslintrc.js', '.eslintrc.json' }
---       end,
---     },
--- 
---     -- Markdown.
---     null_ls.builtins.formatting.markdownlint,
---     null_ls.builtins.diagnostics.markdownlint.with {
---       extra_args = { '--disable', 'line-length' },
---     },
--- 
---     -- PhpCs and PhpCbf
---     null_ls.builtins.diagnostics.phpcs.with { -- Use the local installation first
---       diagnostics_format = '#{m} (#{c}) [#{s}]', -- Makes PHPCS errors more readeable
---       only_local = 'vendor/bin',
---     },
---     null_ls.builtins.formatting.phpcbf.with {
---       prefer_local = 'vendor/bin',
---     },
--- 
---     -- Prettier and spelling
---     null_ls.builtins.formatting.prettierd,
---     null_ls.builtins.completion.spell, -- You still need to execute `:set spell`
---   },
--- }
 
 -- Install linting and formating apps using Mason.
 local mason_nullls = require 'mason-null-ls'

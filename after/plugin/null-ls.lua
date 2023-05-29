@@ -15,10 +15,29 @@ end
 null_ls.setup {
   sources = {
     null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.diagnostics.eslint_d.with({
-      diagnostics_format = '[eslint] #{m}\n(#{c})'
+      diagnostics_format = '[eslint] #{m}\n(#{c})',
+      condition = function(utils)
+        return utils.root_has_file { '.eslintrc.js', '.eslintrc.json' }
+      end
     }),
-    null_ls.builtins.diagnostics.fish
+    null_ls.builtins.diagnostics.fish,
+    null_ls.builtins.formatting.prettierd,
+
+    -- PhpCs and PhpCbf
+    null_ls.builtins.diagnostics.phpcs.with {    -- Use the local installation first
+      diagnostics_format = '#{m} (#{c}) [#{s}]', -- Makes PHPCS errors more readeable
+      only_local = 'vendor/bin',
+    },
+    null_ls.builtins.formatting.phpcbf.with {
+      prefer_local = 'vendor/bin',
+    },
+    -- Markdown.
+    null_ls.builtins.formatting.markdownlint,
+    null_ls.builtins.diagnostics.markdownlint.with {
+      extra_args = { '--disable', 'line-length' },
+    },
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -41,4 +60,3 @@ vim.api.nvim_create_user_command(
   end,
   { nargs = 0 }
 )
-
