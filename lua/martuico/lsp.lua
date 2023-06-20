@@ -42,19 +42,19 @@ require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 local nvim_lsp = require("lspconfig")
 
 nvim_lsp.solargraph.setup {
-    filetypes = {"ruby", "rakefile"},
-    root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git", "."),
-    settings = {
-        solargraph = {
-            autoformat = true,
-            completion = true,
-            diagnostic = true,
-            folding = true,
-            references = true,
-            rename = true,
-            symbols = true
-        }
+  filetypes = { "ruby", "rakefile" },
+  root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git", "."),
+  settings = {
+    solargraph = {
+      autoformat = true,
+      completion = true,
+      diagnostic = true,
+      folding = true,
+      references = true,
+      rename = true,
+      symbols = true
     }
+  }
 }
 
 require 'lspconfig'.solargraph.setup {
@@ -64,6 +64,23 @@ require 'lspconfig'.solargraph.setup {
   settings = {
     solargraph = {
       diagnostics = true
+    }
+  }
+}
+
+require 'lspconfig'.pyright.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = true
+  end,
+  settings = {
+    pyright = { autoImportCompletion = true, },
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = 'openFilesOnly',
+        useLibraryCodeForTypes = true,
+        typeCheckingMode = 'off'
+      }
     }
   }
 }
