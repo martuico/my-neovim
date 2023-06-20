@@ -67,6 +67,16 @@ require 'lspconfig'.solargraph.setup {
     }
   }
 }
+
+require 'lspconfig'.eslint.setup({
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
+})
+
 -- Enable autompletion of keys in conf files like `package.json` or `.eslintrc.json`
 require('lspconfig').jsonls.setup {
   settings = {

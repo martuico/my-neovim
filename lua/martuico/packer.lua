@@ -24,7 +24,7 @@ return require('packer').startup(function(use)
   use("theprimeagen/harpoon")
   use("mbbill/undotree")
   use("tpope/vim-fugitive")
-
+  use("nvim-tree/nvim-web-devicons")
   use {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v2.x',
@@ -46,7 +46,10 @@ return require('packer').startup(function(use)
       { 'L3MON4D3/LuaSnip' },     -- Required
 
       -- Show a fidget at the bottom-right when LSP is working
-      { 'j-hui/fidget.nvim' },
+      {
+        'j-hui/fidget.nvim',
+        tag = 'legacy'
+      },
       { 'b0o/schemastore.nvim' },
 
       -- null-ls integration
