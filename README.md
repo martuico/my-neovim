@@ -1,5 +1,7 @@
 ## My Neovim Setup
-Easy to use
+My personal setup projects with [javascript, typescript, react, vue, nextjs, nuxtjs, python, ruby, php]
+//Todo @add (flutter, golang) in lsconfig + Mason
+![Screenshot 2023-06-20 at 5 37 11 PM](https://github.com/martuico/my-neovim/assets/2949921/87133372-6ef7-4ea0-b7b1-df0d1b7f6873)
 
 
 ### Download Neovim use Packer
