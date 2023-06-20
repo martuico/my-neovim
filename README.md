@@ -7,7 +7,8 @@ Easy to use
 2. git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 3. cd ./lua/martuico/packer.nvim Run :PackerInstall
 4. Set settings on iTerm2
-![Screenshot 2023-06-20 at 11 32 11 AM](https://github.com/martuico/taskhero/assets/2949921/38bbf21d-42d9-4ac6-9e4e-cab96fa7c287)
+![Screenshot 2023-06-20 at 5 35 02 PM](https://github.com/martuico/my-neovim/assets/2949921/507bebe3-785c-436f-b6f1-d4cdb79dc7f6)
+
 
 ### Neovim Map
 1. mapleader = "<Space>"
