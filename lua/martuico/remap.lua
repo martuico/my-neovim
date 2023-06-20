@@ -62,13 +62,13 @@ vim.api.nvim_set_keymap("n", "<C-`>", ":ToggleTerm size=10 dir=%:p:h direction=h
   { silent = true, noremap = true })
 
 function _G.set_terminal_keymaps()
+  local lazy = require("toggleterm.lazy")
+  local ui = lazy.require("toggleterm.ui")
   local opts = {noremap = true}
-  vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
-  -- vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
-  -- vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-  -- vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-  -- vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-  -- vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+  local has_open = ui.find_open_windows()
+  if has_open then
+    vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+  end
 end
 
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
