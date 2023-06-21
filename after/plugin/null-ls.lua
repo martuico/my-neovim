@@ -57,7 +57,8 @@ null_ls.setup {
     null_ls.builtins.code_actions.cspell.with({
       -- This file is symlinked from my dotfiles repo
       extra_args = { "--config", "~/.cspell.json" }
-    })
+    }),
+    null_ls.builtins.diagnostics.flake8.with({ extra_args = { "--max-line-length 88" } })
   },
   on_attach = function(client, bufnr)
     -- the Buffer will be null in buffers like nvim-tree or new unsaved files

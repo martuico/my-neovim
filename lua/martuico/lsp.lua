@@ -29,7 +29,6 @@ end)
 lsp.ensure_installed {
   'lua_ls',
   'intelephense',
-  'tsserver',
   'cssls',
   'jsonls',
   'bashls',
@@ -121,6 +120,19 @@ require('lspconfig').emmet_ls.setup({
   }
 })
 
+
+require 'lspconfig'.pylsp.setup {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = { 'W391' },
+          maxLineLength = 100
+        }
+      }
+    }
+  }
+}
 
 lsp.setup()
 
