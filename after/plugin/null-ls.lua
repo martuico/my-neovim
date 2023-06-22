@@ -24,15 +24,7 @@ null_ls.setup {
     -- Code actions for staging hunks, blame, etc
     null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.completion.luasnip,
-    -- null_ls.builtins.code_actions.eslint_d,
-    null_ls.builtins.diagnostics.eslint_d.with({
-      diagnostics_format = '[eslint] #{m}\n(#{c})',
-      condition = function(utils)
-        return utils.root_has_file { '.eslintrc.js', '.eslintrc.json' }
-      end
-    }),
     null_ls.builtins.diagnostics.fish,
-    -- null_ls.builtins.formatting.prettierd,
 
     -- PhpCs and PhpCbf
     null_ls.builtins.diagnostics.phpcs.with {    -- Use the local installation first
@@ -65,6 +57,9 @@ null_ls.setup {
     if (not bufnr) then
       return
     end
+
+    print(client)
+    print(bufnr)
 
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })

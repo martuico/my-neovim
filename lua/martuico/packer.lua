@@ -53,7 +53,7 @@ return require('packer').startup(function(use)
       { 'b0o/schemastore.nvim' },
 
       -- null-ls integration
-      { 'jose-elias-alvarez/null-ls.nvim' },
+      -- { 'jose-elias-alvarez/null-ls.nvim' },
       { 'jay-babu/mason-null-ls.nvim' },
     },
     config = function()
@@ -117,6 +117,7 @@ return require('packer').startup(function(use)
           null_ls.builtins.code_actions.eslint_d.with(opts.eslint_diagnostics),
         },
         on_attach = on_attach,
+        autostart = true,
       })
     end,
   }
@@ -170,7 +171,6 @@ return require('packer').startup(function(use)
       -- refer to the configuration section below
     },
   }
-
 
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
