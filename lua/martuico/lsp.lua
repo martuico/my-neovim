@@ -33,7 +33,6 @@ lsp.ensure_installed {
   'jsonls',
   'bashls',
   'marksman',
-  'tsserver',
   'pyright',
 }
 
@@ -113,6 +112,7 @@ local eslint = {
   formatStdin = true
 }
 nvim_lsp.tsserver.setup {
+  filetypes = { "typescript", "typescript.tsx" },
   on_attach = function(client)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
