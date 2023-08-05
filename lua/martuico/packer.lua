@@ -1,7 +1,7 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- This file can be (loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -175,4 +175,15 @@ return require('packer').startup(function(use)
   use { "akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end }
+
+  use { 'https://gitlab.com/schrieveslaach/sonarlint.nvim' }
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
 end)

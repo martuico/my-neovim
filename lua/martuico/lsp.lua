@@ -106,26 +106,26 @@ end
 local eslint = {
   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
   lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
+  lintFormats = { "%f:%l:%c: %m" },
   lintIgnoreExitCode = true,
   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
   formatStdin = true
 }
 nvim_lsp.tsserver.setup {
-  filetypes = { "typescript", "typescript.tsx" },
+  filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "tsx" },
   on_attach = function(client)
     if client.config.flags then
       client.config.flags.allow_incremental_sync = true
     end
     client.resolved_capabilities.document_formatting = false
-    set_lsp_config(client)
+    -- set_lsp_configh(client)
   end
 }
 nvim_lsp.efm.setup {
   on_attach = function(client)
     client.resolved_capabilities.document_formatting = true
     client.resolved_capabilities.goto_definition = false
-    set_lsp_config(client)
+    -- set_lsp_config(client)
   end,
   root_dir = function()
     if not eslint_config_exists() then
@@ -135,12 +135,12 @@ nvim_lsp.efm.setup {
   end,
   settings = {
     languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ["javascript.jsx"] = {eslint},
-      typescript = {eslint},
-      ["typescript.tsx"] = {eslint},
-      typescriptreact = {eslint}
+      javascript = { eslint },
+      javascriptreact = { eslint },
+      ["javascript.jsx"] = { eslint },
+      typescript = { eslint },
+      ["typescript.tsx"] = { eslint },
+      typescriptreact = { eslint }
     }
   },
   filetypes = {
@@ -238,4 +238,40 @@ cmp_mappings['<S-Tab>'] = nil
 
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings
+})
+
+-- sonarlint
+local solarlint_ext_path = vim.fn.stdpath('data') .. '/sonarlint-vscode/extension'
+local solarlint_server_path = solarlint_ext_path .. '/server/sonarlint-ls.jar'
+
+local analyzer_html = solarlint_ext_path .. '/analyzers/sonarhtml.jar'
+local analyzer_js = solarlint_ext_path .. '/analyzers/sonarjs.jar'
+local analyzer_php = solarlint_ext_path .. '/analyzers/sonarphp.jar'
+local analyzer_text = solarlint_ext_path .. '/analyzers/sonartext.jar'
+local analyzer_python = solarlint_ext_path .. '/analyzers/sonarpython.jar'
+local analyzer_go = solarlint_ext_path .. '/analyzers/sonargo.jar'
+local analyzer_php = solarlint_ext_path .. '/analyzers/sonarphp.jar'
+
+require('sonarlint').setup({
+  server = {
+    cmd = {
+      'java', '-jar', solarlint_server_path,
+      '-stdio',
+      '-analyzers', analyzer_js, analyzer_html, analyzer_php, analyzer_text, analyzer_python, analyzer_go, analyzer_php
+    },
+  },
+  filetypes = {
+    'css',
+    'javascript',
+    'typescript',
+    'html',
+    'python',
+    'php',
+    'go',
+  },
+  settings = {
+    sonarlint = {
+      pathToNodeExecutable = '/Users/gaudencioenriquezjr/.nvm/versions/node/v18.15.0/bin/node'
+    }
+  }
 })
