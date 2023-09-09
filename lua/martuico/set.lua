@@ -9,7 +9,7 @@ vim.g.loaded_man = false
 vim.g.loaded_2html_plugin = false
 vim.g.loaded_remote_plugins = false
 vim.g.loaded_perl_provider = false
-vim.g.loaded_ruby_provider = false
+-- vim.g.loaded_ruby_provider = false
 
 local opt = vim.opt
 opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"

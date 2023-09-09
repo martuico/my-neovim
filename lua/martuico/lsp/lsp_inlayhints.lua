@@ -1,7 +1,6 @@
 local ok, lsp_inlayhints = pcall(require, "lsp-inlayhints")
 if not ok then
-    return
+	return
 end
 
-lsp_inlayhints.setup {}
-
+lsp_inlayhints.setup({})
