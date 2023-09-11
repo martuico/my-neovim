@@ -1,3 +1,18 @@
+-- Show something more than a mere bullet on the list of installed servers
+require("mason").setup({
+	ui = {
+		border = "rounded",
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
+})
+
+-- Display LSP status on the bottom right corner
+require("fidget").setup()
+
 local lspconfig_status, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status then
 	return
@@ -9,6 +24,7 @@ if not cmp_nvim_lsp_status then
 end
 
 local keymap = vim.keymap
+local lspzero = require("lsp-zero").preset("recommended")
 
 -- inlay cmd
 vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
@@ -16,6 +32,7 @@ vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
 local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
+	lspzero.default_keymaps({ buffer = bufnr, preserve_mappings = true })
 	-- attach inlay hint
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = "LspAttach_inlayhints",
@@ -26,19 +43,11 @@ local on_attach = function(client, bufnr)
 			require("lsp-inlayhints").on_attach(client, args.buf)
 		end,
 	})
-	-- set keybinds for lsp saga
-	keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
-	keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
-	keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
-	keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
-	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
-	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
-	keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts) -- see outline on right hand side
+
+	-- Additional keymappings for 60% keybards.
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "[R]e[n]ame", buffer = bufnr })
+	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction", buffer = bufnr })
+	vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "[B]uffer [F]ormat", buffer = bufnr })
 
 	-- typescript specific keymaps (e.g. rename file and update imports)
 	if client.name == "tsserver" then
@@ -225,16 +234,6 @@ local eslint = {
 	formatStdin = true,
 }
 
-lspconfig.tsserver.setup({
-	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "tsx" },
-	on_attach = function(client)
-		if client.config.flags then
-			client.config.flags.allow_incremental_sync = true
-		end
-		client.resolved_capabilities.document_formatting = false
-		-- set_lsp_configh(client)
-	end,
-})
 lspconfig.efm.setup({
 	on_attach = function(client)
 		client.resolved_capabilities.document_formatting = true
@@ -287,17 +286,6 @@ lspconfig.solargraph.setup({
 	},
 })
 
-lspconfig.solargraph.setup({
-	cmd = { "solargraph", "stdio" },
-	filetypes = { "ruby" },
-	root_dir = lspconfig.util.root_pattern("Gemfile", ".git"),
-	settings = {
-		solargraph = {
-			diagnostics = true,
-		},
-	},
-})
-
 lspconfig.pyright.setup({
 	on_attach = function(client, bufnr)
 		client.resolved_capabilities.document_formatting = true
@@ -313,4 +301,48 @@ lspconfig.pyright.setup({
 			},
 		},
 	},
+})
+
+require("lspconfig").volar.setup({
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+	capabilities = capabilities,
+	on_attach = on_attach,
+	init_options = {
+		languageFeatures = {
+			references = true,
+			definition = true,
+			typeDefinition = true,
+			callHierarchy = true,
+			hover = false,
+			rename = true,
+			signatureHelp = true,
+			codeAction = true,
+			completion = {
+				defaultTagNameCase = "both",
+				defaultAttrNameCase = "kebabCase",
+			},
+			schemaRequestService = true,
+			documentHighlight = true,
+			codeLens = true,
+			semanticTokens = true,
+			diagnostics = true,
+		},
+		documentFeatures = {
+			selectionRange = true,
+			foldingRange = true,
+			linkedEditingRange = true,
+			documentSymbol = true,
+			documentColor = true,
+		},
+	},
+	settings = {
+		volar = {
+			codeLens = {
+				references = true,
+				pugTools = true,
+				scriptSetupTools = true,
+			},
+		},
+	},
+	root_dir = lspconfig.util.root_pattern("package.json", "vue.config.js", "nuxt.config.js", "tsconfig.json"),
 })

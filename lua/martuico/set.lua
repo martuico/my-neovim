@@ -1,6 +1,10 @@
--- vim.opt.guifont = { "JetbrainsMono Nerd Font", ":h15" }
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+    command = "if mode() != 'c' | checktime | endif",
+    pattern = { "*" },
+})
+vim.opt.guifont = { "JetbrainsMono Nerd Font", ":h15" }
 -- unload nvim default plugins
--- vim.opt.termguicolors = true
+vim.opt.termguicolors = true
 vim.g.loaded_gzip = false
 vim.g.loaded_matchit = false
 vim.g.loaded_tarPlugin = false
@@ -15,10 +19,6 @@ local opt = vim.opt
 opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 opt.autoread = true
 
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-	command = "if mode() != 'c' | checktime | endif",
-	pattern = { "*" },
-})
 -- line numbers
 opt.number = true
 opt.relativenumber = true
@@ -76,7 +76,7 @@ opt.isfname:append("@-@")
 
 opt.timeoutlen = 300
 opt.updatetime = 300
-opt.title = true -- set the title of window to the value of the titlestring
+opt.title = true                -- set the title of window to the value of the titlestring
 opt.titlestring = "%<%F - nvim" -- what the title of the window will be set to
 
 opt.colorcolumn = "90"

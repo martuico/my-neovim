@@ -20,10 +20,13 @@ return require("packer").startup(function(use)
 			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 			ts_update()
 		end,
+		config = function()
+			require("martuico.lsp.treesitter")
+		end,
 	})
 
 	use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" })
-	use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
+	use({ "HiPhish/nvim-ts-rainbow2", after = "nvim-treesitter" })
 	use("nvim-treesitter/playground")
 
 	use("theprimeagen/harpoon")
@@ -191,6 +194,27 @@ return require("packer").startup(function(use)
 			require("martuico.formatters.null_ls")
 		end,
 	}) -- formatter
+
+	use({
+		"j-hui/fidget.nvim",
+		tag = "legacy",
+	})
+
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v2.x",
+		dependencies = {
+			-- LSP Support
+			{ "neovim/nvim-lspconfig" },
+			{ "williamboman/mason.nvim" },
+			{ "williamboman/mason-lspconfig.nvim" },
+
+			-- Autocompletion
+			{ "hrsh7th/nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "L3MON4D3/LuaSnip" },
+		},
+	})
 
 	use("simrat39/symbols-outline.nvim")
 end)
