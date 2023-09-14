@@ -126,13 +126,13 @@ return require("packer").startup(function(use)
 	})
 
 	-- [[ Additional lsp plugins ]]
-	use({
-		"lvimuser/lsp-inlayhints.nvim",
-		event = "LspAttach",
-		config = function()
-			require("martuico.lsp.lsp_inlayhints")
-		end,
-	})
+	-- use({
+	-- 	"lvimuser/lsp-inlayhints.nvim",
+	-- 	event = "LspAttach",
+	-- 	config = function()
+	-- 		require("martuico.lsp.lsp_inlayhints")
+	-- 	end,
+	-- })
 
 	use({ "jose-elias-alvarez/typescript.nvim" })
 
