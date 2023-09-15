@@ -252,6 +252,7 @@ require("lspconfig").efm.setup({
 		return vim.fn.getcwd()
 	end,
 	settings = {
+		rootMarkers = { ".git/", "pyproject.toml" },
 		languages = {
 			javascript = { eslint },
 			javascriptreact = { eslint },
@@ -261,6 +262,7 @@ require("lspconfig").efm.setup({
 			typescriptreact = { eslint },
 		},
 	},
+	init_options = { documentFormatting = true },
 	filetypes = {
 		"javascript",
 		"javascriptreact",
