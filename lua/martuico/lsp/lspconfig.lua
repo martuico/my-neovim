@@ -188,7 +188,7 @@ lspconfig["lua_ls"].setup({
 	},
 })
 
-lspconfig.intelephense.setup({
+require("lspconfig").intelephense.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = {
@@ -206,7 +206,7 @@ phpactor_capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 
-lspconfig.phpactor.setup({
+require("lspconfig").phpactor.setup({
 	on_attach = on_attach,
 	capabilities = phpactor_capabilities,
 	filetypes = {
@@ -239,7 +239,7 @@ local eslint = {
 	formatStdin = true,
 }
 
-lspconfig.efm.setup({
+require("lspconfig").efm.setup({
 	on_attach = function(client)
 		client.resolved_capabilities.document_formatting = true
 		client.resolved_capabilities.goto_definition = false
@@ -271,11 +271,11 @@ lspconfig.efm.setup({
 	},
 })
 
-lspconfig.eslint.setup({
-	on_attach = on_attach,
-})
+-- require("lspconfig").eslint.setup({
+-- 	on_attach = on_attach,
+-- })
 
-lspconfig.solargraph.setup({
+require("lspconfig").solargraph.setup({
 	filetypes = { "ruby", "rakefile" },
 	root_dir = lspconfig.util.root_pattern("Gemfile", ".git", "."),
 	settings = {
@@ -291,7 +291,7 @@ lspconfig.solargraph.setup({
 	},
 })
 
-lspconfig.pyright.setup({
+require("lspconfig").pyright.setup({
 	on_attach = function(client, bufnr)
 		client.resolved_capabilities.document_formatting = true
 	end,
@@ -356,7 +356,8 @@ require("lspconfig").volar.setup({
 local cmp = require("cmp")
 local cmp_action = require("lsp-zero").cmp_action()
 
-require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
+
 cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" },
@@ -384,10 +385,10 @@ local cmp_mappings = lspzero.defaults.cmp_mappings({
 	}),
 	["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(cmp_select), { "i", "c" }),
 	["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(cmp_select), { "i", "c" }),
-	-- ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-	-- ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-	-- ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-	-- ["<C-Space>"] = cmp.mapping.complete(),
+	-- ["<C-p>"] = cmp_loader.mapping.select_prev_item(cmp_select),
+	-- ["<C-n>"] = cmp_loader.mapping.select_next_item(cmp_select),
+	-- ["<C-y>"] = cmp_loader.mapping.confirm({ select = true }),
+	-- ["<C-Space>"] = cmp_loader.mapping.complete(),
 })
 
 cmp_mappings["<Tab>"] = nil

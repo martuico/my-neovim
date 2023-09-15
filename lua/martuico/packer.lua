@@ -107,7 +107,6 @@ return require("packer").startup(function(use)
 	})
 
 	-- [[ Language Server Protocol and Snippet Engine ]]
-
 	-- native lsp
 	use({
 		"neovim/nvim-lspconfig",
@@ -154,10 +153,11 @@ return require("packer").startup(function(use)
 				ft = { "html", "css" },
 			},
 		},
-		config = function()
-			require("martuico.lsp.cmp")
-		end,
+		-- config = function()
+		-- 	require("martuico.lsp.cmp")
+		-- end,
 	})
+
 	use({ "hrsh7th/cmp-nvim-lsp" }) -- builtin lsp complete
 	-- better sorting
 	use({
