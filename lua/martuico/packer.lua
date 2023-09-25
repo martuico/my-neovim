@@ -25,8 +25,8 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" })
-	use({ "HiPhish/nvim-ts-rainbow2", after = "nvim-treesitter" })
+	-- use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" })
+	-- use({ "HiPhish/nvim-ts-rainbow2", after = "nvim-treesitter" })
 	use("nvim-treesitter/playground")
 
 	use("theprimeagen/harpoon")
@@ -217,4 +217,12 @@ return require("packer").startup(function(use)
 	})
 
 	use("simrat39/symbols-outline.nvim")
+
+	use({
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!:).
+		run = "make install_jsregexp",
+	})
 end)

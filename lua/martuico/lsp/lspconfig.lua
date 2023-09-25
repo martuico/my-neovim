@@ -245,12 +245,22 @@ require("lspconfig").efm.setup({
 		client.resolved_capabilities.goto_definition = false
 		-- set_lsp_config(client)
 	end,
-	root_dir = function()
-		if not eslint_config_exists() then
-			return nil
-		end
-		return vim.fn.getcwd()
-	end,
+	root_dir = lspconfig.util.root_pattern(
+		".eslintrc",
+		".eslintrc.js",
+		".eslintrc.cjs",
+		".eslintrc.yaml",
+		".eslintrc.yml",
+		".eslintrc.json"
+		-- Disabled to prevent "No ESLint configuration found" exceptions
+		-- 'package.json',
+	),
+	-- root_dir = function()
+	-- 	if not eslint_config_exists() then
+	-- 		return nil
+	-- 	end
+	-- 	return vim.fn.getcwd()
+	-- end,
 	settings = {
 		rootMarkers = { ".git/", "pyproject.toml" },
 		languages = {
@@ -311,7 +321,7 @@ require("lspconfig").pyright.setup({
 })
 
 require("lspconfig").volar.setup({
-	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 	capabilities = capabilities,
 	on_attach = on_attach,
 	init_options = {
@@ -351,7 +361,7 @@ require("lspconfig").volar.setup({
 			},
 		},
 	},
-	root_dir = lspconfig.util.root_pattern("package.json", "vue.config.js", "nuxt.config.js", "tsconfig.json"),
+	root_dir = lspconfig.util.root_pattern("package.json", "vue.config.js", "nuxt.config.js"),
 })
 
 -- cmp
@@ -372,21 +382,46 @@ cmp.setup({
 	},
 	automatic_installation = true,
 })
+
+local has_words_before = function()
+	unpack = unpack or table.unpack
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+local luasnip = require("luasnip")
+
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lspzero.defaults.cmp_mappings({
 	["<Tab>"] = cmp.mapping(function(fallback)
 		if cmp.visible() then
-			cmp.confirm({ select = true })
+			cmp.select_next_item()
+		-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+		-- they way you will only jump inside the snippet region
+		elseif luasnip.expand_or_jumpable() then
+			luasnip.expand_or_jump()
+		elseif has_words_before() then
+			cmp.complete()
 		else
 			fallback()
 		end
-	end, { "i", "c" }),
+	end, { "i", "s" }),
 	["<C-e>"] = cmp.mapping({
 		i = cmp.mapping.abort(),
 		c = cmp.mapping.close(),
 	}),
 	["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(cmp_select), { "i", "c" }),
 	["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(cmp_select), { "i", "c" }),
+	["<CR>"] = cmp.mapping({
+		i = function(fallback)
+			if cmp.visible() and cmp.get_active_entry() then
+				cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+			else
+				fallback()
+			end
+		end,
+		s = cmp.mapping.confirm({ select = true }),
+		c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+	}),
 	-- ["<C-p>"] = cmp_loader.mapping.select_prev_item(cmp_select),
 	-- ["<C-n>"] = cmp_loader.mapping.select_next_item(cmp_select),
 	-- ["<C-y>"] = cmp_loader.mapping.confirm({ select = true }),

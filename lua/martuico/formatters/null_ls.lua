@@ -26,11 +26,16 @@ null_ls.setup({
 				"json",
 				"jsonc",
 				"javascript",
+				"javascriptreact",
 				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
 				"javascript.glimmer",
 				"typescript.glimmer",
 				"handlebars",
 				"vue",
+				"tsx",
+				"jsx",
 			},
 		}), -- js/ts formatter
 		formatting.stylua, -- lua formatter
