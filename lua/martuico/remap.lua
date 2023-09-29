@@ -76,3 +76,19 @@ function _G.set_terminal_keymaps()
 end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+require("capslock").setup()
+require("lualine").setup({
+	sections = {
+		lualine_x = {
+			{ require("capslock").status_string },
+			{
+				"filename",
+				file_status = true, -- displays file status (readonly status, modified status)
+				path = 2, -- 0 = just filename, 1 = relative path, 2 = absolute path
+			},
+		},
+	},
+})
+vim.keymap.set({ "i", "c", "n" }, "<C-g>c", "<Plug>CapsLockToggle")
+vim.keymap.set("i", "<C-l>", "<Plug>CapsLockToggle")

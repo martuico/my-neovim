@@ -225,4 +225,12 @@ return require("packer").startup(function(use)
 		-- install jsregexp (optional!:).
 		run = "make install_jsregexp",
 	})
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
+	use({
+		"barklan/capslock.nvim",
+		tag = "v1.4.1",
+	})
 end)
