@@ -3,15 +3,6 @@ if (not status) then return end
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
-local lsp_formatting = function(bufnr)
-  vim.lsp.buf.format({
-    filter = function(client)
-      return client.name == "null-ls"
-    end,
-    bufnr = bufnr,
-  })
-end
-
 null_ls.setup {
   sources = {
     null_ls.builtins.formatting.prettierd.with({
@@ -58,16 +49,16 @@ null_ls.setup {
       return
     end
 
-    print(client)
-    print(bufnr)
-
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = augroup,
         buffer = bufnr,
         callback = function()
-          lsp_formatting(bufnr)
+          -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+          -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+          --vim.lsp.buf.formatting_sync({ bufnr = bufnr })
+          vim.lsp.buf.format({ async = false })
         end,
       })
     end

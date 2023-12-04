@@ -34,6 +34,10 @@ lsp.ensure_installed {
   'bashls',
   'marksman',
   'pyright',
+  'cssls',
+  'emmet_ls',
+  'efm',
+  'tsserver'
 }
 
 -- Configure lua language server for neovim
@@ -69,7 +73,7 @@ require 'lspconfig'.solargraph.setup {
 }
 
 require 'lspconfig'.pyright.setup {
-  on_attach = function(client, bufnr)
+  on_attach = function(client)
     client.resolved_capabilities.document_formatting = true
   end,
   settings = {
@@ -86,7 +90,7 @@ require 'lspconfig'.pyright.setup {
 }
 
 local function eslint_config_exists()
-  local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
+  local eslintrc = vim.fn.glob(".eslintrc*", false, 1)
 
   if not vim.tbl_isempty(eslintrc) then
     return true
@@ -164,6 +168,27 @@ require('lspconfig').jsonls.setup {
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require 'lspconfig'.cssls.setup {
+  capabilities = capabilities,
+  settings = {
+    css = { validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    },
+    scss = { validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    },
+    less = { validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    },
+  },
+}
 
 require('lspconfig').emmet_ls.setup({
   -- on_attach = on_attach,
@@ -246,7 +271,6 @@ local solarlint_server_path = solarlint_ext_path .. '/server/sonarlint-ls.jar'
 
 local analyzer_html = solarlint_ext_path .. '/analyzers/sonarhtml.jar'
 local analyzer_js = solarlint_ext_path .. '/analyzers/sonarjs.jar'
-local analyzer_php = solarlint_ext_path .. '/analyzers/sonarphp.jar'
 local analyzer_text = solarlint_ext_path .. '/analyzers/sonartext.jar'
 local analyzer_python = solarlint_ext_path .. '/analyzers/sonarpython.jar'
 local analyzer_go = solarlint_ext_path .. '/analyzers/sonargo.jar'

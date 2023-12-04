@@ -7,9 +7,7 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.1',
-    -- or                            , branch = '0.1.x',
-    requires = { { 'nvim-lua/plenary.nvim' } }
+    'nvim-telescope/telescope.nvim', tag = '0.1.5'
   }
 
   use {
@@ -138,6 +136,27 @@ return require('packer').startup(function(use)
   })
 
   use { "bluz71/vim-moonfly-colors", as = "moonfly" }
+  use {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("tokyonight").setup({
+        -- use the night style
+        style = "night",
+        -- disable italic for functions
+        styles = {
+          functions = {}
+        },
+        sidebars = { "qf", "vista_kind", "terminal", "packer" },
+        -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+        on_colors = function(colors)
+          colors.hint = colors.orange
+          colors.error = "#ff0000"
+        end
+      })
+    end
+  }
   use { "mg979/vim-visual-multi" }
   use {
     "aca/emmet-ls"
