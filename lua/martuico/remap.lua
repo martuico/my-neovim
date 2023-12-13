@@ -29,7 +29,10 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
+-- local esc = vim.api.nvim_replace_termcodes("<esc>", true, false, true)
+--vim.api.nvim_feedkeys(esc, "x", false)
 vim.keymap.set("i", "<C-c>", "<Esc>")
+--vim.keymap.set("i", "<C-c>", "<Plug>CapsLockToggle")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -77,18 +80,19 @@ end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
-require("capslock").setup()
-require("lualine").setup({
-	sections = {
-		lualine_x = {
-			{ require("capslock").status_string },
-			{
-				"filename",
-				file_status = true, -- displays file status (readonly status, modified status)
-				path = 2, -- 0 = just filename, 1 = relative path, 2 = absolute path
-			},
-		},
-	},
-})
-vim.keymap.set({ "i", "c", "n" }, "<C-g>c", "<Plug>CapsLockToggle")
-vim.keymap.set("i", "<C-l>", "<Plug>CapsLockToggle")
+-- require("capslock").setup()
+-- require("lualine").setup({
+-- 	sections = {
+-- 		lualine_x = {
+-- 			{ require("capslock").status_string },
+-- 			{
+-- 				"filename",
+-- 				file_status = true, -- displays file status (readonly status, modified status)
+-- 				path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+-- 			},
+-- 		},
+-- 	},
+-- })
+
+--vim.keymap.set({ "i", "c", "n" }, "<C-g>c", "<Plug>CapsLockToggle")
+--vim.keymap.set("i", "<C-l>", "<Plug>CapsLockToggle")

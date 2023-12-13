@@ -240,36 +240,38 @@ local eslint = {
 }
 
 require("lspconfig").efm.setup({
-	on_attach = function(client)
-		client.resolved_capabilities.document_formatting = true
-		client.resolved_capabilities.goto_definition = false
-		-- set_lsp_config(client)
+	--	on_attach = function(client)
+	--		if client.resolved_capabilities then
+	--			client.resolved_capabilities.document_formatting = true
+	--			client.resolved_capabilities.goto_definition = false
+	--		end
+	--		-- set_lsp_config(client)
+	--	end,
+	-- root_dir = lspconfig.util.root_pattern(
+	-- 	".eslintrc",
+	-- 	".eslintrc.js",
+	-- 	".eslintrc.cjs",
+	-- 	".eslintrc.yaml",
+	-- 	".eslintrc.yml",
+	-- 	".eslintrc.json"
+	-- 	-- Disabled to prevent "No ESLint configuration found" exceptions
+	-- 	-- 'package.json',
+	-- ),
+	root_dir = function()
+		if not eslint_config_exists() then
+			return nil
+		end
+		return vim.fn.getcwd()
 	end,
-	root_dir = lspconfig.util.root_pattern(
-		".eslintrc",
-		".eslintrc.js",
-		".eslintrc.cjs",
-		".eslintrc.yaml",
-		".eslintrc.yml",
-		".eslintrc.json"
-		-- Disabled to prevent "No ESLint configuration found" exceptions
-		-- 'package.json',
-	),
-	-- root_dir = function()
-	-- 	if not eslint_config_exists() then
-	-- 		return nil
-	-- 	end
-	-- 	return vim.fn.getcwd()
-	-- end,
 	settings = {
 		rootMarkers = { ".git/", "pyproject.toml" },
 		languages = {
-			javascript = { eslint },
-			javascriptreact = { eslint },
-			["javascript.jsx"] = { eslint },
-			typescript = { eslint },
-			["typescript.tsx"] = { eslint },
-			typescriptreact = { eslint },
+			--	javascript = { eslint },
+			--	javascriptreact = { eslint },
+			--	["javascript.jsx"] = { eslint },
+			--	typescript = { eslint },
+			--	["typescript.tsx"] = { eslint },
+			--	typescriptreact = { eslint },
 		},
 	},
 	init_options = { documentFormatting = true },
@@ -282,7 +284,6 @@ require("lspconfig").efm.setup({
 		"typescriptreact",
 	},
 })
-
 -- require("lspconfig").eslint.setup({
 -- 	on_attach = on_attach,
 -- })
