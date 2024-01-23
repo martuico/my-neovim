@@ -84,8 +84,10 @@ lspconfig["html"].setup({
 	on_attach = on_attach,
 })
 
+local util = require("lspconfig/util")
 -- tsserver
-require("typescript").setup({
+-- require("typescript").setup({
+lspconfig["tsserver"].setup({
 	disable_commands = false,
 	debug = false,
 	go_to_source_definition = {
@@ -102,9 +104,7 @@ require("typescript").setup({
 			"typescriptreact",
 			"typescript.tsx",
 		},
-		root_dir = function()
-			return vim.loop.cwd()
-		end,
+		root_dir = util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd(),
 		settings = {
 			javascript = {
 				inlayHints = {
@@ -136,6 +136,17 @@ require("typescript").setup({
 lspconfig["cssls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
+	settings = {
+		css = { validate = true, lint = {
+			unknownAtRules = "ignore",
+		} },
+		scss = { validate = true, lint = {
+			unknownAtRules = "ignore",
+		} },
+		less = { validate = true, lint = {
+			unknownAtRules = "ignore",
+		} },
+	},
 })
 
 -- configure tailwindcss server

@@ -1,7 +1,8 @@
 vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-    command = "if mode() != 'c' | checktime | endif",
-    pattern = { "*" },
+	command = "if mode() != 'c' | checktime | endif",
+	pattern = { "*" },
 })
+vim.cmd("filetype plugin indent on")
 vim.opt.guifont = { "JetbrainsMono Nerd Font", ":h15" }
 -- unload nvim default plugins
 vim.opt.termguicolors = true
@@ -76,7 +77,7 @@ opt.isfname:append("@-@")
 
 opt.timeoutlen = 300
 opt.updatetime = 300
-opt.title = true                -- set the title of window to the value of the titlestring
+opt.title = true -- set the title of window to the value of the titlestring
 opt.titlestring = "%<%F - nvim" -- what the title of the window will be set to
 
 opt.colorcolumn = "90"
