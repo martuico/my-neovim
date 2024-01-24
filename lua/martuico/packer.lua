@@ -25,8 +25,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" })
-	-- use({ "HiPhish/nvim-ts-rainbow2", after = "nvim-treesitter" })
+	use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" })
 	use("nvim-treesitter/playground")
 
 	use("theprimeagen/harpoon")
@@ -124,15 +123,6 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- [[ Additional lsp plugins ]]
-	-- use({
-	-- 	"lvimuser/lsp-inlayhints.nvim",
-	-- 	event = "LspAttach",
-	-- 	config = function()
-	-- 		require("martuico.lsp.lsp_inlayhints")
-	-- 	end,
-	-- })
-
 	use({ "jose-elias-alvarez/typescript.nvim" })
 
 	use({
@@ -171,14 +161,6 @@ return require("packer").startup(function(use)
 		event = "InsertCharPre",
 	})
 	use({ "onsails/lspkind.nvim" }) -- icon inside autocomplete window
-	-- use {
-	--     "nvimdev/lspsaga.nvim",
-	--     branch = "main",
-	--     event = "BufRead",
-	--     config = function()
-	--         require "martuico.lsp.saga"
-	--     end,
-	-- } -- better goto navigation
 
 	-- [[ Linter and Formatter ]]
 	use({
@@ -219,23 +201,21 @@ return require("packer").startup(function(use)
 	use("simrat39/symbols-outline.nvim")
 
 	use({
-		"L3MON4D3/LuaSnip",
-		-- follow latest release.
-		tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		-- install jsregexp (optional!:).
-		run = "make install_jsregexp",
-	})
-	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 	})
 
-	-- use({
-	-- 	"barklan/capslock.nvim",
-	-- 	tag = "v1.4.1",
-	-- })
-
 	use({
 		"f-person/git-blame.nvim",
 	})
+
+	use({
+		"L3MON4D3/LuaSnip",
+		tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!:).
+		run = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+	})
+
+	use({ "dsznajder/vscode-es7-javascript-react-snippets", run = "yarn install --frozen-lockfile && yarn compile" })
 end)
