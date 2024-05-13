@@ -582,7 +582,14 @@ require("lazy").setup({
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
-				-- tsserver = {},
+				tsserver = require("martuico.plugins.lsp.ts"),
+				gopls = require("martuico.plugins.lsp.go"),
+				intelephense = require("martuico.plugins.lsp.php"),
+				cssls = require("martuico.plugins.lsp.css"),
+				tailwindcss = require("martuico.plugins.lsp.tailwind"),
+				rust_analyzer = require("martuico.plugins.lsp.rust"),
+				diagnosticls = require("martuico.plugins.lsp.diagnotics"),
+
 				--
 
 				lua_ls = {
@@ -740,9 +747,9 @@ require("lazy").setup({
 
 					-- If you prefer more traditional completion keymaps,
 					-- you can uncomment the following lines
-					--['<CR>'] = cmp.mapping.confirm { select = true },
-					--['<Tab>'] = cmp.mapping.select_next_item(),
-					--['<S-Tab>'] = cmp.mapping.select_prev_item(),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping.select_next_item(),
+					["<S-Tab>"] = cmp.mapping.select_prev_item(),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
