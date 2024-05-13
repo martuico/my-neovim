@@ -169,7 +169,7 @@ return require("packer").startup(function(use)
 			require("martuico.formatters.mason_null_ls")
 		end,
 	}) -- linter and formatter installer
-
+	use({ "mhartington/formatter.nvim" })
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		config = function()
@@ -211,11 +211,9 @@ return require("packer").startup(function(use)
 
 	use({
 		"L3MON4D3/LuaSnip",
-		tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		-- install jsregexp (optional!:).
-		run = "make install_jsregexp",
 		dependencies = { "rafamadriz/friendly-snippets" },
 	})
 
-	use({ "dsznajder/vscode-es7-javascript-react-snippets", run = "yarn install --frozen-lockfile && yarn compile" })
+	--use({ "dsznajder/vscode-es7-javascript-react-snippets", run = "yarn install --frozen-lockfile && yarn compile" })
+	use("lvimuser/lsp-inlayhints.nvim")
 end)

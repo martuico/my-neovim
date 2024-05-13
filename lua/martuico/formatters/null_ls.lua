@@ -14,7 +14,7 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	{
 		command = "prettierd",
-		filetype = { "typescript", "typescriptreact", "jsonc" },
+		filetype = { "typescript", "typescriptreact", "jsonc", "json", "javascript", "javascriptreact" },
 	},
 	-- setup formatters & linters
 	sources = {
@@ -42,7 +42,13 @@ null_ls.setup({
 		diagnostics.eslint_d.with({ -- js/ts linter
 			-- only enable eslint if root has .eslintrc.js
 			condition = function(utils)
-				return utils.root_has_file(".eslintrc.js") -- change file extension if you use something else
+				return utils.root_has_file(
+					".eslintrc.js",
+					".eslintrc.cjs",
+					".eslintrc.yaml",
+					".eslintrc.yml",
+					".eslintrc.json"
+				) -- change file extension if you use something else
 			end,
 		}),
 		null_ls.builtins.formatting.black,

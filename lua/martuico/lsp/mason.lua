@@ -19,9 +19,9 @@ mason_lspconfig.setup({
 		"cssls",
 		"tailwindcss",
 		"lua_ls",
-		"emmet_ls",
+		--"emmet_ls",
 		"volar",
-        "rust_analyzer",
+		"rust_analyzer",
 	},
 	automatic_installation = true,
 })

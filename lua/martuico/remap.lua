@@ -37,7 +37,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- use Ctrl+s to save and fix format
--- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -79,20 +79,3 @@ function _G.set_terminal_keymaps()
 end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-
--- require("capslock").setup()
--- require("lualine").setup({
--- 	sections = {
--- 		lualine_x = {
--- 			{ require("capslock").status_string },
--- 			{
--- 				"filename",
--- 				file_status = true, -- displays file status (readonly status, modified status)
--- 				path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
--- 			},
--- 		},
--- 	},
--- })
-
---vim.keymap.set({ "i", "c", "n" }, "<C-g>c", "<Plug>CapsLockToggle")
---vim.keymap.set("i", "<C-l>", "<Plug>CapsLockToggle")

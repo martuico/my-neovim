@@ -35,19 +35,17 @@ local on_attach = function(client, bufnr)
 
 	lspzero.default_keymaps({ buffer = bufnr, preserve_mappings = true })
 	-- attach inlay hint
-	-- vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-	-- vim.api.nvim_create_autocmd("LspAttach", {
-	-- 	group = "LspAttach_inlayhints",
-	-- 	callback = function(args)
-	-- 		if not (args.data and args.data.client_id) then
-	-- 			return
-	-- 		end
+	vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+	vim.api.nvim_create_autocmd("LspAttach", {
+		group = "LspAttach_inlayhints",
+		callback = function(args)
+			if not (args.data and args.data.client_id) then
+				return
+			end
 
-	-- 		local bufnr = args.buf
-	-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
-	-- 		require("lsp-inlayhints").on_attach(client, bufnr)
-	-- 	end,
-	-- })
+			require("lsp-inlayhints").on_attach(vim.lsp.get_client_by_id(args.data.client_id), args.buf)
+		end,
+	})
 
 	-- Additional keymappings for 60% keybards.
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "[R]e[n]ame", buffer = bufnr })
@@ -156,18 +154,18 @@ lspconfig["tailwindcss"].setup({
 })
 
 -- configure emmet language server
-lspconfig["emmet_ls"].setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	filetypes = {
-		"html",
-		"typescriptreact",
-		"javascriptreact",
-		"css",
-		"sass",
-		"scss",
-	},
-})
+-- lspconfig["emmet_ls"].setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- 	filetypes = {
+-- 		"html",
+-- 		"typescriptreact",
+-- 		"javascriptreact",
+-- 		"css",
+-- 		"sass",
+-- 		"scss",
+-- 	},
+-- })
 
 -- configure lua server (with special settings)
 lspconfig["lua_ls"].setup({
@@ -289,9 +287,7 @@ require("lspconfig").efm.setup({
 	filetypes = {
 		"javascript",
 		"javascriptreact",
-		"javascript.jsx",
 		"typescript",
-		"typescript.tsx",
 		"typescriptreact",
 	},
 })
@@ -376,23 +372,68 @@ require("lspconfig").volar.setup({
 	root_dir = lspconfig.util.root_pattern("package.json", "vue.config.js", "nuxt.config.js"),
 })
 
+local luasnip = require("luasnip")
 -- cmp
 local cmp = require("cmp")
 local cmp_action = require("lsp-zero").cmp_action()
 
--- require("luasnip.loaders.from_vscode").lazy_load()
+--require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
+		{
+			name = "buffer",
+			option = {
+				get_bufnrs = function()
+					local bufs = {}
+					for _, win in ipairs(vim.api.nvim_list_wins()) do
+						bufs[vim.api.nvim_win_get_buf(win)] = true
+					end
+					return vim.tbl_keys(bufs)
+				end,
+			},
+		},
+		{ name = "path" },
+		{ name = "nvim_lsp_signature_help" },
+		--{name = 'cmp_tabnine'}
+		{ name = "codeium" },
 	},
 	mapping = {
-		["<C-f>"] = cmp_action.luasnip_jump_forward(),
-		["<C-b>"] = cmp_action.luasnip_jump_backward(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<C-d>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		}),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<Tab>"] = function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end,
+		["<S-Tab>"] = function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end,
 	},
 	automatic_installation = true,
+	formatting = {},
 })
 
 local has_words_before = function()
@@ -400,7 +441,6 @@ local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-local luasnip = require("luasnip")
 
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lspzero.defaults.cmp_mappings({
@@ -434,10 +474,6 @@ local cmp_mappings = lspzero.defaults.cmp_mappings({
 		s = cmp.mapping.confirm({ select = true }),
 		c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 	}),
-	-- ["<C-p>"] = cmp_loader.mapping.select_prev_item(cmp_select),
-	-- ["<C-n>"] = cmp_loader.mapping.select_next_item(cmp_select),
-	-- ["<C-y>"] = cmp_loader.mapping.confirm({ select = true }),
-	-- ["<C-Space>"] = cmp_loader.mapping.complete(),
 })
 
 cmp_mappings["<Tab>"] = nil
@@ -490,3 +526,5 @@ require("sonarlint").setup({
 		},
 	},
 })
+
+require("lspconfig").prismals.setup({})

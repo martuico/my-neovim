@@ -1,0 +1,7 @@
+{
+  "test": {
+    "prefix": "test",
+    "body": "<!Testing html>\n",
+    "description": "HTML - 5.0 (doctype)"
+  }
+}

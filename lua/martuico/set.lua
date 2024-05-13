@@ -42,6 +42,8 @@ opt.smartcase = true
 
 -- hightligth active line
 opt.cursorline = true
+-- " Visual mode better less bright highlight
+-- hi Visual cterm=NONE ctermfg=NONE ctermbg=237 guibg=#3a3a3a
 
 -- true color terminal settings
 opt.termguicolors = true
@@ -81,3 +83,11 @@ opt.title = true -- set the title of window to the value of the titlestring
 opt.titlestring = "%<%F - nvim" -- what the title of the window will be set to
 
 opt.colorcolumn = "90"
+opt.wrapmargin = 2
+opt.textwidth = 90
+
+vim.g.python3_host_prog = "/usr/local/bin/python3"
+vim.g.loaded_ruby_provider = 0
+
+vim.cmd("highlight Visual cterm=NONE ctermfg=NONE ctermbg=black guibg=#fff58e")
+vim.cmd("highlight Search cterm=NONE ctermfg=NONE ctermbg=black guibg=#ff7e7e")
