@@ -40,6 +40,8 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set("n", "<leader><Esc>", vim.cmd.Ex, { desc = "Go to file explorer" })
 vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save on ctr+s" })
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Exit edit mode" })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move me baby!" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move me baby oh yeah!" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -732,19 +734,11 @@ require("lazy").setup({
 		end,
 	},
 
-	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
-	-- init.lua. If you want these files, they are in the repository, so you can just download them and
-	-- place them in the correct locations.
-
-	-- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
 	--
-	--  Here are some example plugins that I've included in the Kickstart repository.
-	--  Uncomment any of the lines below to enable them (you will need to restart nvim).
-	--
-	-- require 'kickstart.plugins.debug',
+	require("martuico.plugins.debug"),
 	require("martuico.plugins.indent_line"),
-	-- require 'kickstart.plugins.lint',
-	-- require 'kickstart.plugins.autopairs',
+	require("martuico.plugins.lint"),
+	require("martuico.plugins.autopairs"),
 	require("martuico.plugins.neo-tree"),
 	require("martuico.plugins.lazygit"),
 	require("martuico.plugins.gitsigns"), -- adds gitsigns recommend keymaps
