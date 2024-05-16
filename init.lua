@@ -42,6 +42,33 @@ vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save on ctr+s" })
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Exit edit mode" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move me baby!" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move me baby oh yeah!" })
+vim.keymap.set("n", "++", "<cmd>:lua require('quicknote').ToggleNoteSigns()<cr>", { desc = "Toggle notes on the side" })
+vim.keymap.set(
+	"n",
+	"+-",
+	"<cmd>:lua require('quicknote').DeleteNoteAtCurrentLine()<cr>",
+	{ desc = "Delete note at current line" }
+)
+vim.keymap.set("n", "+[", "<cmd>:lua require('quicknote').JumpToPreviousNote()<cr>", { desc = "Go to previous note" })
+vim.keymap.set("n", "+]", "<cmd>:lua require('quicknote').JumpToNextNote()<cr>", { desc = "Go to next note" })
+vim.keymap.set(
+	"n",
+	"+l",
+	"<cmd>:lua require('quicknote').ListNotesForCurrentBuffer()<cr>",
+	{ desc = "Show list of notes" }
+)
+vim.keymap.set(
+	"n",
+	"+a",
+	"<cmd>:lua require('quicknote').NewNoteAtCurrentLine()<cr>",
+	{ desc = "Create new notes on current line" }
+)
+vim.keymap.set(
+	"n",
+	"+o",
+	"<cmd>:lua require('quicknote').OpenNoteAtCurrentLine()<cr>",
+	{ desc = "Open notes on current line" }
+)
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -216,12 +243,16 @@ require("lazy").setup({
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
 					},
+					quicknote = {
+						defaultScope = "CWD",
+					},
 				},
 			})
 
 			-- Enable Telescope extensions if they are installed
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
+			pcall(require("telescope").load_extension, "quicknote")
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
@@ -741,7 +772,9 @@ require("lazy").setup({
 	require("martuico.plugins.autopairs"),
 	require("martuico.plugins.neo-tree"),
 	require("martuico.plugins.lazygit"),
+	require("martuico.plugins.laravel"),
 	require("martuico.plugins.gitsigns"), -- adds gitsigns recommend keymaps
+	require("martuico.plugins.note-taking"),
 
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
 	--    This is the easiest way to modularize your config.
