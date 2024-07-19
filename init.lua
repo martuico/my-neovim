@@ -70,6 +70,21 @@ vim.keymap.set(
 	{ desc = "Open notes on current line" }
 )
 
+-- Open compiler
+vim.api.nvim_set_keymap("n", "-o", "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
+
+-- Redo last selected option
+vim.api.nvim_set_keymap(
+	"n",
+	"-[",
+	"<cmd>CompilerStop<cr>" -- (Optional, to dispose all tasks before redo)
+		.. "<cmd>CompilerRedo<cr>",
+	{ noremap = true, silent = true }
+)
+
+-- Toggle compiler results
+vim.api.nvim_set_keymap("n", "--", "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -549,11 +564,42 @@ require("lazy").setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
 				-- Conform can also run multiple formatters sequentially
-				-- python = { "isort", "black" },
+				python = { "isort", "black" },
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
-				-- javascript = { { "prettierd", "prettier" } },
+				javascript = { { "prettierd", "prettier" } },
+				formatters = {
+					phpcbf = {
+						command = "/home/marcarlotuico/.local/share/nvim/mason/bin/phpcbf",
+						args = {}, -- { "--standard=/home/rich/nobackup/civicrm-coder/coder_sniffer/Drupal" }
+					},
+				},
+				formatters_by_ft = {
+					php = { "phpcbf" },
+				},
+			},
+			ft_parsers = {
+				javascript = "babel",
+				javascriptreact = "babel",
+				typescript = "typescript",
+				typescriptreact = "typescript",
+				vue = "vue",
+				css = "css",
+				scss = "scss",
+				less = "less",
+				html = "html",
+				json = "json",
+				jsonc = "json",
+				yaml = "yaml",
+				markdown = "markdown",
+				["markdown.mdx"] = "mdx",
+				graphql = "graphql",
+				handlebars = "glimmer",
+			},
+			-- Use a specific prettier parser for a file extension
+			ext_parsers = {
+				qmd = "markdown",
 			},
 		},
 	},
@@ -775,6 +821,10 @@ require("lazy").setup({
 	require("martuico.plugins.laravel"),
 	require("martuico.plugins.gitsigns"), -- adds gitsigns recommend keymaps
 	require("martuico.plugins.note-taking"),
+	require("martuico.plugins.compiler"),
+	require("martuico.plugins.multi-visual"),
+	require("martuico.plugins.nvim-ufo"),
+	require("martuico.plugins.tailwind-tools"),
 
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
 	--    This is the easiest way to modularize your config.
