@@ -1,7 +1,6 @@
 local nvim_lsp = require("lspconfig")
 local on_attach = require("martuico.plugins.lsp.attached")
 
-nvim_lsp.tailwindcss.document_config.default_config.init_options.userLanguages = { ["html.twig"] = "twig" }
 return {
 	on_attach = on_attach,
 	filetypes = vim.tbl_deep_extend(

@@ -26,7 +26,32 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.o.termguicolors = true
+-- transparent background
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
+vim.api.nvim_set_hl(0, "Terminal", { bg = "none" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+vim.api.nvim_set_hl(0, "FoldColumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "Folded", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
 
+-- transparent background for neotree
+vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "NeoTreeVertSplit", { bg = "none" })
+vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "none" })
+vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { bg = "none" })
+
+-- transparent background for nvim-tree
+vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NvimTreeVertSplit", { bg = "none" })
+vim.api.nvim_set_hl(0, "NvimTreeEndOfBuffer", { bg = "none" })
+
+-- hides `~` at the end of the buffer
+vim.cmd([[set fillchars+=eob:\ ]])
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
@@ -261,6 +286,13 @@ require("lazy").setup({
 					quicknote = {
 						defaultScope = "CWD",
 					},
+					fzf = {
+						fuzzy = true, -- false will only do exact matching
+						override_generic_sorter = true, -- override the generic sorter
+						override_file_sorter = true, -- override the file sorter
+						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+						-- the default case_mode is "smart_case"
+					},
 				},
 			})
 
@@ -479,7 +511,7 @@ require("lazy").setup({
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
-				tsserver = require("martuico.plugins.lsp.ts"),
+				ts_ls = require("martuico.plugins.lsp.ts"),
 				gopls = require("martuico.plugins.lsp.go"),
 				intelephense = require("martuico.plugins.lsp.php"),
 				cssls = require("martuico.plugins.lsp.css"),
@@ -714,24 +746,51 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
-		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
-
-			-- You can configure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "mocha",
+				transparent_background = true,
+				term_colors = false,
+				color_overrides = {
+					mocha = {
+						base = "#000000",
+					},
+				},
+				integrations = {
+					nvimtree = true,
+				},
+				highlight_overrides = {
+					mocha = function(mocha)
+						return {
+							NvimTreeNormal = { bg = mocha.none },
+						}
+					end,
+				},
+			})
+			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
+	-- { -- You can easily change to a different colorscheme.
+	-- Change the name of the colorscheme plugin below, and then
+	-- change the command in the config to whatever the name of that colorscheme is.
+	--
+	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	-- "folke/tokyonight.nvim",
+	-- priority = 1000, -- Make sure to load this before all the other start plugins.
+	-- init = function()
+	-- Load the colorscheme here.
+	-- Like many other themes, this one has different styles, and you could load
+	-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+	-- vim.cmd.colorscheme("tokyonight-night")
+
+	-- You can configure highlights by doing something like:
+	-- vim.cmd.hi("Comment gui=none")
+	-- end,
+	-- },
 
 	-- Highlight todo, notes, etc in comments
 	{
